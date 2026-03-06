@@ -1,52 +1,39 @@
-import numpy as np
-from sklearn.linear_model import LogisticRegression
-from sklearn.preprocessing import LabelEncoder
+import os
+import pandas as pd
 import joblib
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
 
-# ----------------- Generate Synthetic Dataset -----------------
-np.random.seed(42)
-n = 800
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-attendance = np.random.randint(40, 100, n)
-study_hours = np.random.randint(0, 10, n)
-internal_marks = np.random.randint(5, 30, n)
-assignments = np.random.randint(0, 10, n)
-previous_gpa = np.round(np.random.uniform(4.0, 9.5, n), 2)
-online_engagement = np.random.randint(20, 100, n)
-late_submissions = np.random.randint(0, 5, n)
+dataset_path = os.path.join(BASE_DIR, "student_dataset.csv")
+df = pd.read_csv(dataset_path)
 
-X = np.column_stack([
-    attendance,
-    study_hours,
-    internal_marks,
-    assignments,
-    previous_gpa,
-    online_engagement,
-    late_submissions
-])
+X = df.drop("performance", axis=1)
+y = df["performance"]
 
-# ----------------- Target Variable -----------------
-y = []
-for i in range(n):
-    if attendance[i] > 75 and study_hours[i] > 4 and previous_gpa[i] > 7:
-        y.append("Good")
-    elif attendance[i] > 55:
-        y.append("Average")
-    else:
-        y.append("Poor")
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
 
-y = np.array(y)
+model = RandomForestClassifier(
+    n_estimators=200,
+    max_depth=10,
+    random_state=42
+)
 
-# ----------------- Encode Labels -----------------
-label_encoder = LabelEncoder()
-y_encoded = label_encoder.fit_transform(y)
+model.fit(X_train, y_train)
 
-# ----------------- Train Model -----------------
-model = LogisticRegression(max_iter=1000)
-model.fit(X, y_encoded)
+# Calculate accuracy
+y_pred = model.predict(X_test)
+accuracy = accuracy_score(y_test, y_pred)
 
-# ----------------- Save Model -----------------
-joblib.dump(model, "student_model.pkl")
-joblib.dump(label_encoder, "label_encoder.pkl")
+# Save both model and accuracy
+model_path = os.path.join(BASE_DIR, "model", "student_model.pkl")
+joblib.dump({
+    "model": model,
+    "accuracy": accuracy
+}, model_path)
 
-print("✅ Model trained and saved successfully")
+print(f"Model saved with accuracy: {round(accuracy*100,2)}% ✅")

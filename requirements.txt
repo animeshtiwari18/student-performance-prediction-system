@@ -1,9 +1,9 @@
 flask
 flask-cors
+pandas
 numpy
 scikit-learn
-joblib
-gunicorn
 streamlit
 requests
-matplotlib
+reportlab
+shap

@@ -1,62 +1,50 @@
 import pandas as pd
-import random
-import os
+import numpy as np
 
-os.makedirs("data", exist_ok=True)
+np.random.seed(42)
 
-rows = []
+rows = 1200
+data = []
 
-def generate_row(label):
-    if label == "Good":
-        return [
-            random.randint(75, 95),
-            random.randint(6, 9),
-            random.randint(22, 30),
-            random.randint(7, 10),
-            round(random.uniform(7.8, 9.8), 1),
-            "Good"
-        ]
-    elif label == "Average":
-        return [
-            random.randint(50, 70),
-            random.randint(4, 6),
-            random.randint(16, 20),
-            random.randint(5, 6),
-            round(random.uniform(6.0, 6.9), 1),
-            "Average"
-        ]
+for _ in range(rows):
+    attendance = np.random.randint(40, 101)
+    study_hours = np.random.randint(1, 11)
+    internal_marks = np.random.randint(5, 31)
+    assignments = np.random.randint(2, 11)
+    previous_gpa = round(np.random.uniform(4.0, 10.0), 2)
+    online_engagement = np.random.randint(30, 101)
+    late_submissions = np.random.randint(0, 6)
+
+    score = (
+        attendance * 0.2 +
+        study_hours * 5 +
+        internal_marks * 1.5 +
+        assignments * 2 +
+        previous_gpa * 5 +
+        online_engagement * 0.1 -
+        late_submissions * 3
+    )
+
+    if score > 160:
+        performance = "High"
+    elif score > 120:
+        performance = "Average"
     else:
-        return [
-            random.randint(20, 45),
-            random.randint(1, 3),
-            random.randint(8, 14),
-            random.randint(1, 4),
-            round(random.uniform(3.0, 5.5), 1),
-            "Poor"
-        ]
+        performance = "Low"
 
-# fixed required case
-rows.append([52, 6, 18, 6, 6.5, "Average"])
+    data.append([
+        attendance, study_hours, internal_marks,
+        assignments, previous_gpa,
+        online_engagement, late_submissions,
+        performance
+    ])
 
-for _ in range(700):
-    rows.append(generate_row("Good"))
-
-for _ in range(700):
-    rows.append(generate_row("Average"))
-
-for _ in range(599):
-    rows.append(generate_row("Poor"))
-
-columns = [
-    "attendance",
-    "study_hours",
-    "internal_marks",
-    "assignments",
-    "previous_gpa",
+df = pd.DataFrame(data, columns=[
+    "attendance", "study_hours", "internal_marks",
+    "assignments", "previous_gpa",
+    "online_engagement", "late_submissions",
     "performance"
-]
+])
 
-df = pd.DataFrame(rows, columns=columns)
-df.to_csv("data/student_data.csv", index=False)
-
-print("Dataset created successfully")
+df.to_csv("student_dataset.csv", index=False)
+print("Dataset Generated Successfully ✅")
