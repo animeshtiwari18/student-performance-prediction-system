@@ -32,16 +32,25 @@ Run dashboard:
 
 streamlit run frontend.py
 
-## Project Output
+## 📸 Project Output Screenshots
 
 ### Dashboard
 ![Dashboard](screenshots/dashboard.png)
 
 ### Prediction Result
-![Prediction](screenshots/prediction_result.png)
+![Prediction Result](screenshots/prediction_result.png)
+
+### Prediction Confidence
+![Prediction Confidence](screenshots/prediction_confidence.png)
 
 ### AI Explanation
-![Explanation](screenshots/Ai_explanation.png)
+![AI Explanation](screenshots/Ai_explanation.png)
 
-### Performance Radar Chart
-![Radar](screenshots/radar_chart.png)
+### Grade Improvement Analysis
+![Grade Improvement](screenshots/grade_improvement_analysis.png)
+
+### Intelligent AI Recommendation
+![AI Recommendation](screenshots/intelligent_ai_recommendation.png)
+
+### Academic Performance Radar Chart
+![Radar Chart](screenshots/radar_chart.png)
