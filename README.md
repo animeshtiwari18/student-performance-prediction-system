@@ -38,7 +38,7 @@ streamlit run frontend.py
 ![Dashboard](screenshots/dashboard.png)
 
 ### Prediction Result
-![Prediction](screenshots/prediction.png)
+![Prediction](screenshots/prediction_result.png)
 
 ### AI Explanation
 ![Explanation](screenshots/ai_explanation.png)
