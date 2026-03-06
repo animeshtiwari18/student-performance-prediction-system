@@ -35,7 +35,7 @@ streamlit run frontend.py
 ## Project Output
 
 ### Dashboard
-![Dashboard]()
+![Dashboard](screenshots/dashboard.png)
 
 ### Prediction Result
 ![Prediction](screenshots/prediction.png)
