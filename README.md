@@ -41,7 +41,7 @@ streamlit run frontend.py
 ![Prediction](screenshots/prediction_result.png)
 
 ### AI Explanation
-![Explanation](screenshots/ai_explanation.png)
+![Explanation](screenshots/Ai_explanation.png)
 
 ### Performance Radar Chart
 ![Radar](screenshots/radar_chart.png)
